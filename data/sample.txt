@@ -1,0 +1,26 @@
+The TextProcessor class you provided has a couple of issues that might cause it not to function as expected. Here's a breakdown and a corrected version of your code:
+
+Static Method Usage: The method chunk_text should be either a @staticmethod like clean_text or it should take self as the first parameter if it's meant to be an instance method.
+Incorrect Chunking Logic: In the chunk_text method, you are using len(text) for the range in list comprehension, which should instead be len(words) because you are chunking based on the number of words, not the length of the text.
+Here’s a corrected version of the TextProcessor class:
+
+python
+Copy code
+class TextProcessor:
+    @staticmethod
+    def clean_text(text):
+        cleaned_text = text.replace('\n', '')
+        return cleaned_text
+
+    @staticmethod
+    def chunk_text(text, chunk_size):
+        words = text.split(" ")
+        chunks = [' '.join(words[i:i+chunk_size]) for i in range(0, len(words), chunk_size)]
+        return chunks
+Key Changes:
+Static Method Annotation: Added @staticmethod to chunk_text for consistency since it doesn’t utilize any class or instance-specific data.
+Chunking Fix: Changed the range from len(text) to len(words) to correctly calculate chunks based on words.
+Join Words: Added ' '.join() inside the list comprehension to turn the list of words back into a string for each chunk.
+This version should now work correctly for the purposes of cleaning text and chunking it into specified sizes based on word count.
+
+
